@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import MuseUI from 'muse-ui'
+import 'muse-ui/dist/muse-ui.css'
+import 'material-design-icons/iconfont/material-icons.css';
+
+Vue.use(MuseUI)
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

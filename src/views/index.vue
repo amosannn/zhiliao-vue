@@ -1,94 +1,73 @@
 <template>
-  <div class="main">
-    <div class="content">
-      <div class="home-entry">
-        <div class="home-entry-avatar">
-          <img id="userAvatar" src="image/avatar2.jpg">
-        </div>
-        <div class="home-entry-box">
-          <ul class="home-entry-list">
-            <li><a href="#" class="open-mask"><i class="sprite-ask"></i>提问</a></li>
-            <li><a href="/questionList"><i class="sprite-answer"></i>回答</a></li>
-          </ul>
-        </div>
-        <div class="list-title">
-          <div class="title-text"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;最新动态</div>
-          <div class="setting"><a href="setting"><span class="glyphicon glyphicon-cog"></span>&nbsp;设置</a></div>
-        </div>
-        <div id="feedList" class="feed-list">
-				<!--<script id="feedListTemplate" type="text/html">-->
-				<!--{{each answerList}}-->
-          <!--<div class="feed-item">-->
-            <!--<div class="avatar">-->
-              <!--<a href="${base}/profile/{{$value.user.userId}}"><img src="{{$value.user.avatarUrl}}"></a>-->
-            <!--</div>-->
-            <!--<div class="vote-count">-->
-              <!--<% if($value.likeState=="true"){ %>-->
-                <!--<a class="like-clicked">{{$value.likedCount}}</a>-->
-              <!--<% }else{ %>-->
-                <!--<a>{{$value.likedCount}}</a>-->
-              <!--<% } %>-->
-            <!--</div>-->
-            <!--<div class="feed-body">-->
-              <!--<div class="feed-source">-->
-                <!--<a href="${base}/profile/{{$value.user.userId}}">{{$value.user.username}}</a>-->
-                <!--<span>&nbsp;回答了问题</span>-->
-                <!--<span>&nbsp;•&nbsp;</span>-->
-                <!--<span>{{$value.createTime | $longToDateString}}</span>-->
-              <!--</div>-->
-              <!--<h2 class="feed-title">-->
-                <!--<a href="${base}/question/{{$value.question.questionId}}#answer-{{$value.answerId}}">{{$value.question.questionTitle}}</a>-->
-              <!--</h2>-->
-              <!--<div class="feed-user-info">-->
-                <!--<a href="#">{{$value.user.username}}</a>-->
-                <!--<span class="comma">，</span>-->
-                <!--<span>{{$value.user.simpleDesc}}</span>-->
-              <!--</div>-->
-              <!--<div class="feed-content">-->
-                <!--<%==$value.answerContent%>-->
-              <!--</div>-->
-              <!--<div class="feed-meta">-->
-                <!--<a href="${base}/question/{{$value.question.questionId}}#answer-{{$value.answerId}}"><span class="glyphicon glyphicon-plus"></span>&nbsp;关注问题</a>-->
-                <!--<a href="${base}/question/{{$value.question.questionId}}#answer-{{$value.answerId}}"><span class="glyphicon glyphicon-leaf"></span>{{$value.commentCount}}条评论</a>-->
-                <!--<div class="hidden-part" style="display: none;">-->
-                  <!--<a href="${base}/question/{{$value.question.questionId}}#answer-{{$value.answerId}}"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;收藏</a>-->
-                <!--</div>-->
-                <!--<a href="${base}/question/{{$value.question.questionId}}#answer-{{$value.answerId}}">作者保留权利</a>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-				<!--{{/each}}-->
-				<!--</script>-->
-			  </div>
-      </div>
-      <div class="sidebar">
-        <div class="sidebar-top">
-          <ul>
-            <li><a href="/collections"><i class="sprite-collection"></i>我的收藏</a></li>
-            <li><a class="profile-question-link" href=""><i class="sprite-invite"></i>我的提问</a></li>
-            <li><a class="profile-link" href=""><i class="sprite-invite"></i>我回答的问题</a></li>
-            <li><a class="profile-follow-question-link" href=""><i class="sprite-question"></i>我关注的问题</a></li>
-          </ul>
-        </div>
+<div>
 
-        <div class="footer">
-          <a href="#">建议反馈</a>
-          <span> • </span>
-          <a href="#">联系我们</a>
-          <div></div>
-          <span>@ 2018 知了</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <mu-appbar title="Title">
+    <mu-flat-button label="Search" icon="search" class="appbar-search-field"  slot="left"/>
+    <mu-flat-button color="white" label="flat Button" slot="right"/>
+  </mu-appbar>
+
+  <mu-card>
+    <mu-card-header title="Myron Avatar" subTitle="sub title">
+      <mu-avatar src="/images/uicon.jpg" slot="avatar"/>
+    </mu-card-header>
+    <mu-card-media title="Image Title" subTitle="Image Sub Title">
+      <img src="/images/sun.jpg" />
+    </mu-card-media>
+    <mu-card-title title="Content Title" subTitle="Content Title"/>
+    <mu-card-text>
+      散落在指尖的阳光，我试着轻轻抓住光影的踪迹，它却在眉宇间投下一片淡淡的阴影。
+      调皮的阳光掀动了四月的心帘，温暖如约的歌声渐起。
+      似乎在诉说着，我也可以在漆黑的角落里，找到阴影背后的阳光，
+      找到阳光与阴影奏出和谐的旋律。我要用一颗敏感赤诚的心迎接每一缕滑过指尖的阳光！
+    </mu-card-text>
+    <mu-card-actions>
+      <mu-flat-button label="Action 1"/>
+      <mu-flat-button label="Action 2"/>
+    </mu-card-actions>
+  </mu-card>
+
+  <mu-paper>
+    <mu-bottom-nav :value="bottomNav" @change="handleChange">
+      <mu-bottom-nav-item value="主页" title="Recents" icon="restore"/>
+      <mu-bottom-nav-item value="回答" title="Favorites" icon="favorite"/>
+      <mu-bottom-nav-item value="提问" title="Nearby" icon="location_on"/>
+      <mu-bottom-nav-item value="通知" title="Nearby" icon="location_on"/>
+      <mu-bottom-nav-item value="我的" title="Nearby" icon="location_on"/>
+    </mu-bottom-nav>
+  </mu-paper>
+</div>
 </template>
 
 <script>
-	export default {
-		name: "index"
-	}
+  export default {
+    data () {
+      return {
+        bottomNav: 'recents'
+      }
+    },
+    methods: {
+      handleChange (val) {
+        this.bottomNav = val
+      }
+    }
+  }
 </script>
 
-<style scoped>
-
+<style lang="less">
+  .appbar-search-field{
+    color: #FFF;
+    margin-bottom: 0;
+    &.focus-state {
+      color: #FFF;
+    }
+    .mu-text-field-hint {
+      color: fade(#FFF, 54%);
+    }
+    .mu-text-field-input {
+      color: #FFF;
+    }
+    .mu-text-field-focus-line {
+      background-color: #FFF;
+    }
+  }
 </style>

@@ -16,7 +16,7 @@ export default new Router({
       name: 'Index',
       components: {
         main:index,
-        footer: Footer
+        // footer: Footer
       }
     },
     {
