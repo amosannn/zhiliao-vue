@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index.vue'
-import Footer from '@/views/Footer.vue'
+import Footer from '@/components/footer/footGuide.vue'
 import Topic from '@/views/topic/Topic.vue'
 import Topics from '@/views/topic/Topics.vue'
 import TopicDetail from '@/views/topic/TopicDetail.vue'
+import Home from '@/views/home/home.vue'
 
 Vue.use(Router)
 
@@ -13,10 +14,10 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
+      name: 'Home',
       components: {
-        main:index,
-        // footer: Footer
+        main:Home,
+        footer: Footer
       }
     },
     {
