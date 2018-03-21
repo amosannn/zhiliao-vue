@@ -2,23 +2,33 @@
 <html>
   <head>
     <script>
-      fnResize()
-      window.onresize = function () {
-        fnResize()
-      }
-      function fnResize() {
-        var deviceWidth = document.documentElement.clientWidth || window.innerWidth
-        if (deviceWidth >= 750) {
-          deviceWidth = 750
+      (function(win) {
+        var docEl = win.document.documentElement;
+        var timer = '';
+
+        function changeRem() {
+          var width = docEl.getBoundingClientRect().width;
+          if (width > 750) { // 750是设计稿大小
+            width = 750;
+          }
+          var fontS = width / 10; // 把设备宽度十等分 1rem=10px
+          docEl.style.fontSize = fontS + "px";
         }
-        if (deviceWidth <= 320) {
-          deviceWidth = 320
-        }
-        document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px'
-      }
+        win.addEventListener("resize", function() {
+          clearTimeout(timer);
+          timer = setTimeout(changeRem, 30);
+        }, false);
+        win.addEventListener("pageshow", function(e) {
+          if (e.persisted) { //清除缓存
+            clearTimeout(timer);
+            timer = setTimeout(changeRem, 30);
+          }
+        }, false);
+        changeRem();
+      })(window)
     </script>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0，minimum-scale=1.0">
     <title>zhiliao-vue</title>
   </head>
   <body>
