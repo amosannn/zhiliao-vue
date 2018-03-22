@@ -10,8 +10,9 @@ import 'material-design-icons/iconfont/material-icons.css';
 
 Vue.use(MuseUI)
 
-Vue.prototype.$http = axios
-Vue.config.productionTip = false
+axios.defaults.withCredentials=true;
+Vue.prototype.$http = axios;
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({

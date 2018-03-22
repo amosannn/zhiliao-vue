@@ -1,9 +1,11 @@
 <template>
   <mu-paper class="guide_item">
     <mu-bottom-nav :value="bottomNav" @change="handleChange">
-      <mu-bottom-nav-item value="recents" title="Recents" icon="library_books"/>
-      <mu-bottom-nav-item value="favorites" title="Favorites" icon="favorite"/>
-      <mu-bottom-nav-item value="nearby" title="Nearby" icon="location_on"/>
+      <mu-bottom-nav-item to="/" value="home" title="首页" icon="library_books"/>
+      <mu-bottom-nav-item to="collection" value="collection" title="收藏夹" icon="archive"/>
+      <mu-bottom-nav-item value="notification" title="通知" icon="notifications"/>
+      <mu-bottom-nav-item value="more" title="更多" icon="menu"/>
+      <mu-bottom-nav-item value="me" title="我的" icon="face"/>
     </mu-bottom-nav>
   </mu-paper>
 </template>

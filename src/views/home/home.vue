@@ -6,12 +6,16 @@
       <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
       <!--icon-loupe-->
     </mu-appbar>
-    <mu-tabs class="appbar-tab" :value="activeTab" @change="handleTabChange">
-      <mu-tab value="dynamic" title="动态"/>
-      <mu-tab value="hot" title="热门"/>
-      <mu-tab value="explore" title="发现"/>
-    </mu-tabs>
+    <mu-paper class="appbar-tabs-paper" :zDepth="2">
+      <mu-tabs class="appbar-tab" :value="activeTab" @change="handleTabChange">
+        <mu-tab value="dynamic" title="动态"/>
+        <mu-tab value="hot" title="热门"/>
+        <mu-tab value="explore" title="发现"/>
+      </mu-tabs>
+    </mu-paper>
+
     <mu-refresh-control class="refresh-control" :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
+
     <!-- feed流 -->
     <mu-list class="content-list">
       <template v-for="(item,index) in items">
@@ -131,15 +135,21 @@
     /*}*/
   }
 
-  .appbar-tab{
-    margin-top: 1rem;
-    height: 0.7rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+  .appbar-tabs-paper{
+    /*display: inline-block;*/
+    /*height: 100px;*/
+    /*width: 100px;*/
+    /*margin: 20px;*/
+    /*text-align: center;*/
+    .appbar-tab{
+      margin-top: 1rem;
+      height: 0.7rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
   }
-
 
   .content-list{
     margin-top: 1.5rem;
