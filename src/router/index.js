@@ -10,6 +10,7 @@ import TopicDetail from '@/views/topic/TopicDetail.vue'
 import Home from '@/views/home/home.vue'
 import Collection from '@/views/collection/collection.vue'
 import Login from '@/views/login/login.vue'
+import More from '@/views/more/more.vue'
 
 Vue.use(Router)
 
@@ -38,6 +39,15 @@ export default new Router({
       components: {
         // head: Header,
         main: Collection,
+        footer: Footer
+      }
+    },
+    {
+      path: '/more',
+      name: 'More',
+      components: {
+        // head: Header,
+        main: More,
         footer: Footer
       }
     },
