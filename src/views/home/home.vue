@@ -1,18 +1,20 @@
 <template>
   <div>
-    <mu-appbar class="title"  title="知了">
-      <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
-      <span class="appbar-text" slot="center">知了</span>
-      <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
-      <!--icon-loupe-->
-    </mu-appbar>
-    <mu-paper class="appbar-tabs-paper" :zDepth="2">
-      <mu-tabs class="appbar-tab" :value="activeTab" @change="handleTabChange">
-        <mu-tab value="dynamic" title="动态"/>
-        <mu-tab value="hot" title="热门"/>
-        <mu-tab value="explore" title="发现"/>
-      </mu-tabs>
-    </mu-paper>
+    <!--<mu-appbar class="title"  title="知了">-->
+      <!--<mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>-->
+      <!--<span class="appbar-text" slot="center">知了</span>-->
+      <!--<mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>-->
+      <!--&lt;!&ndash;icon-loupe&ndash;&gt;-->
+    <!--</mu-appbar>-->
+    <zhiliao></zhiliao>
+    <!--<mu-paper class="appbar-tabs-paper" :zDepth="2">-->
+      <!--<mu-tabs class="appbar-tab" :value="activeTab" @change="handleTabChange">-->
+        <!--<mu-tab value="dynamic" title="动态"/>-->
+        <!--<mu-tab value="hot" title="热门"/>-->
+        <!--<mu-tab value="explore" title="发现"/>-->
+      <!--</mu-tabs>-->
+    <!--</mu-paper>-->
+    <tabs :tabList=tabList></tabs>
 
     <mu-refresh-control class="refresh-control" :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
 
@@ -49,15 +51,30 @@
 </template>
 
 <script>
-  import headTop from '@/components/header/head'
+  import zhiliao from '@/components/header/header.vue'
+  import tabs from '@/components/header/tab.vue'
 	export default {
 		name: "home",
+    components:{
+      zhiliao,
+      tabs
+    },
     data (){
 		  return {
 		    activeTab: 'dynamic',
         refreshing: false,
         trigger: null,
         items: [],
+        tabList: [{
+          tabId: 'dynamic',
+          tabName: '热门'
+        }, {
+          tabId: 'hot',
+          tabName: '我的收藏'
+        }, {
+          tabId: 'explore',
+          tabName: '发现'
+        }],
         // url: 'https://www.vue-js.com/api/v1/topics?tab=all',
       }
     },
@@ -110,47 +127,11 @@
         })
       }
     },
-    components:{
-      headTop
-    },
+
 	}
 </script>
 
 <style lang="less">
-  .title{
-    text-align: center;
-    height: 1rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    .appbar-text{
-      font-size: .1rem;
-    }
-    /*.appbar-search-block{*/
-      /*font-size: 18px;*/
-      /*margin-left: -8px;*/
-      /*margin-bottom: 2px;*/
-    /*}*/
-  }
-
-  .appbar-tabs-paper{
-    /*display: inline-block;*/
-    /*height: 100px;*/
-    /*width: 100px;*/
-    /*margin: 20px;*/
-    /*text-align: center;*/
-    .appbar-tab{
-      margin-top: 1rem;
-      height: 0.7rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-    }
-  }
-
   .content-list{
     margin-top: 1.5rem;
     margin-bottom:1.5rem;

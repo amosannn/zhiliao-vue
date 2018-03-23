@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index.vue'
-// import Header from '@/components/header/head.vue'
 import Footer from '@/components/footer/footGuide.vue'
 import Topic from '@/views/topic/Topic.vue'
 import Topics from '@/views/topic/Topics.vue'
@@ -20,7 +19,7 @@ export default new Router({
       path: '/',
       name: 'Home',
       components: {
-        // head: Header,
+        // header: Header,
         main: Home,
         footer: Footer
       }

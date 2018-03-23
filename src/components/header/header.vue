@@ -21,21 +21,18 @@
       <!--<slot name="changecity"></slot>-->
       <!--<slot name="changeLogin"></slot>-->
     <!--</header>-->
+  <mu-appbar class="title"  title="知了">
+    <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
+    <span class="appbar-text" slot="center">知了</span>
+    <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
+    <!--icon-loupe-->
+  </mu-appbar>
 
-  <div>
-    <mu-appbar class="title"  title="知了">
-      <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
-      <span class="appbar-text" slot="center">知了</span>
-      <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
-      <!--icon-loupe-->
-    </mu-appbar>
-    aaa
-  </div>
 </template>
 
 <script>
 	export default {
-		name: "head"
+		name: "zhiliao"
 	}
 </script>
 
@@ -48,13 +45,13 @@
     left: 0;
     right: 0;
     z-index: 10;
-  .appbar-text{
-    font-size: .1rem;
-  }
-  /*.appbar-search-block{*/
-  /*font-size: 18px;*/
-  /*margin-left: -8px;*/
-  /*margin-bottom: 2px;*/
-  /*}*/
+    .appbar-text{
+      font-size: .1rem;
+    }
+    /*.appbar-search-block{*/
+    /*font-size: 18px;*/
+    /*margin-left: -8px;*/
+    /*margin-bottom: 2px;*/
+    /*}*/
   }
 </style>

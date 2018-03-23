@@ -1,19 +1,14 @@
 <template>
   <div>
-    <mu-appbar class="title"  title="知了">
-      <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
-      <span class="appbar-text" slot="center">知了</span>
-      <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
-      <!--icon-loupe-->
-    </mu-appbar>
-
-    <mu-paper class="appbar-tabs-paper" :zDepth="2">
-      <mu-tabs class="appbar-tab" :value="activeTab" @change="handleTabChange">
-        <!--<mu-tab value="dynamic" title="精选"/>-->
-        <mu-tab value="followed" title="已关注"/>
-        <mu-tab value="mine" title="我的收藏夹"/>
-      </mu-tabs>
-    </mu-paper>
+    <zhiliao></zhiliao>
+    <!--<mu-paper class="appbar-tabs-paper" :zDepth="2">-->
+      <!--<mu-tabs class="appbar-tab" :value="activeTab" @change="handleTabChange">-->
+        <!--&lt;!&ndash;<mu-tab value="dynamic" title="精选"/>&ndash;&gt;-->
+        <!--<mu-tab value="followed" title="已关注"/>-->
+        <!--<mu-tab value="mine" title="我的收藏夹"/>-->
+      <!--</mu-tabs>-->
+    <!--</mu-paper>-->
+    <tabs :tabList=tabList></tabs>
     <mu-divider/>
     <div class="gridlist-container">
       <mu-grid-list class="gridlist">
@@ -30,13 +25,24 @@
 </template>
 
 <script>
-	export default {
+  import zhiliao from '@/components/header/header.vue'
+  import tabs from '@/components/header/tab.vue'
+  export default {
 		name: "collection",
+    components:{
+      zhiliao,
+      tabs
+    },
     data () {
       return {
         items: [],
-        activeTab: 'followed',
-
+        tabList: [{
+          tabId: 'followed',
+          tabName: '已关注'
+        }, {
+          tabId: 'mine',
+          tabName: '我的收藏'
+        }],
         list: [{
           image: 'http://www.muse-ui.org/images/breakfast.jpg',
           title: 'Breakfast',
@@ -126,7 +132,7 @@
 	}
 </script>
 
-<style scoped>
+<style >
   .gridlist-container{
     display: flex;
     flex-wrap: wrap;
