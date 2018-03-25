@@ -1,5 +1,5 @@
 <template>
-  <mu-paper class="guide_item">
+  <mu-paper class="foot_nav">
     <mu-bottom-nav :value="bottomNav" @change="handleChange">
       <mu-bottom-nav-item to="/" value="home" title="首页" icon="library_books"/>
       <!--<mu-bottom-nav-item to="/answer" value="answer" title="回答" icon="border_color"/>-->
@@ -13,12 +13,12 @@
 
 <script>
 	export default {
-		name: "foot-guide"
+		name: "foot-nav"
 	}
 </script>
 
-<style scoped>
-  .guide_item{
+<style lang="less" scoped>
+  .foot_nav{
     position: fixed;
     bottom: 0;
     left: 0;

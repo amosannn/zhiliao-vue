@@ -10,6 +10,7 @@ import Home from '@/views/home/home.vue'
 import Collection from '@/views/collection/collection.vue'
 import Login from '@/views/login/login.vue'
 import More from '@/views/more/more.vue'
+import Question from '@/views/question/question.vue'
 
 Vue.use(Router)
 
@@ -51,6 +52,14 @@ export default new Router({
       }
     },
     {
+      path: '/question/:questionId',
+      name: 'Question',
+      components: {
+        main: Question,
+        // footer: Footer
+      }
+    },
+    {
       path: '/topic',
       name: 'Topic',
       components: {
@@ -71,8 +80,8 @@ export default new Router({
       name: 'Topics',
       components: {
         main: Topics,
-        footer:Footer
+        footer: Footer
       }
     }
   ]
-})
+});

@@ -61,7 +61,6 @@
     },
     data (){
 		  return {
-		    activeTab: 'dynamic',
         refreshing: false,
         trigger: null,
         items: [],
