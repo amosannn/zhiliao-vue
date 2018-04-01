@@ -16,7 +16,7 @@
         <mu-grid-tile v-for="(item, index) in items" >
           <img src="http://www.muse-ui.org/images/sun.jpg"/>
           <span slot="title">{{item.collectionName}}</span>
-          <!--<span slot="subTitle">by <b>{{item.user.username}}</b></span>-->
+          <!--<span slot="subTitle">by <b>{{item.login.username}}</b></span>-->
           <mu-icon-button icon="star_border" slot="action"/>
         </mu-grid-tile>
       </mu-grid-list>

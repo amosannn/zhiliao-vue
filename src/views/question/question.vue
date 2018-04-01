@@ -83,8 +83,19 @@
       }
     },
     mounted() {
-      this.questionId = this.$route.params.questionId;
-      console.log(this.questionId)
+      let questionId = this.$route.params.questionId;
+      this.getData(questionId);
+    },
+    methods: {
+      getData(val) {
+        this.$http.get(val,{})
+          .then( (response) => {
+            if( response.data.code === '0000'){
+              this.items = response.data.data.question;
+              console.log(this.items)
+            }
+          })
+      }
     }
 	}
 </script>

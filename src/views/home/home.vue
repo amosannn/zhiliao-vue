@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color:#EEEEEE;">
     <!--<mu-appbar class="title"  title="知了">-->
       <!--<mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>-->
       <!--<span class="appbar-text" slot="center">知了</span>-->
@@ -22,17 +22,17 @@
     <mu-list class="content-list">
       <template v-for="(item,index) in items">
         <mu-card class="content-card">
-          <mu-card-header class="content-card-header" :title="item.user.username+'回答了问题'" @click.native="jumpToUser">
+          <mu-card-header class="content-card-header" :title="item.user.username+'回答了问题'" @click.native="jumpToUser(item.user.userId)">
             <mu-avatar class="content-card-avatar" :src="item.user.avatarUrl" :size="30" slot="avatar"/>
           </mu-card-header>
           <!--<mu-divider/>-->
           <!--<mu-card-media title="Image Title" subTitle="Image Sub Title">-->
             <!--<img src="http://www.muse-ui.org/images/sun.jpg" />-->
           <!--</mu-card-media>-->
-          <mu-card-title titleClass="content-card-title" :title="item.question.questionTitle"/>
+          <mu-card-title titleClass="content-card-title" :title="item.question.questionTitle" @click.native="jumpToQuestion(item.question.questionId)"/>
           <!--<mu-sub-header>{{item.question.questionTitle}}</mu-sub-header>-->
           <!--<mu-divider/>-->
-          <mu-card-text class="content-card-text">
+          <mu-card-text class="content-card-text" @click.native="jumpToAnswer(item.answerId)">
             {{item.answerContent}}
             <!--散落在指尖的阳光，我试着轻轻抓住光影的踪迹，它却在眉宇间投下一片淡淡的阴影。-->
             <!--调皮的阳光掀动了四月的心帘，温暖如约的歌声渐起。-->
@@ -41,7 +41,7 @@
           </mu-card-text>
           <!--<mu-divider/>-->
           <mu-card-actions>
-            <mu-icon-button class="content-card-action" icon="thumb_up"/>
+            <mu-flat-button class="content-card-action" icon="thumb_up" :label="item.likedCount"/>
             <mu-flat-button class="content-card-action" icon="thumb_up" label="Action 2"/>
           </mu-card-actions>
         </mu-card>
@@ -66,10 +66,10 @@
         items: [],
         tabList: [{
           tabId: 'dynamic',
-          tabName: '热门'
+          tabName: '动态'
         }, {
           tabId: 'hot',
-          tabName: '我的收藏'
+          tabName: '热门'
         }, {
           tabId: 'explore',
           tabName: '发现'
@@ -78,9 +78,17 @@
       }
     },
     created() {
+      if (this.getCookie('loginToken') === null || this.getCookie('loginToken') === '') {
+        this.$router.push('/login');
+      } else {
+        this.getData()
+      }
+      console.log(JSON.parse(sessionStorage.getItem("userphone")));
       this.getData()
+
     },
     mounted () {
+
       this.trigger = this.$el
     },
     methods:{
@@ -97,9 +105,25 @@
         }, 2000)
       },
       // 头像跳转到用户页
-      jumpToUser() {
-        console.log("click");
-        // this.$router.push("www.baidu.com");
+      jumpToUser(userId) {
+        this.$router.push("/user/"+userId);
+      },
+      jumpToQuestion(questionId) {
+        this.$router.push({
+          name: 'Question',
+          params: {
+            questionId: questionId
+          }
+        });
+      },
+      jumpToAnswer(answerId) {
+        this.$router.push({
+          name: 'Answer',
+          params: {
+            answerId: answerId,
+            // answer: item
+          }
+        });
       },
       // 切换tab，重新获取feed流数据
       handleTabChange(val) {
@@ -144,7 +168,7 @@
         }
       }
       .content-card-title{
-        height: auto;
+        /*height: auto;*/
         font-size: .45rem;
         /*display:inline-block*/
       }

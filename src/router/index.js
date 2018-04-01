@@ -8,9 +8,13 @@ import Topics from '@/views/topic/Topics.vue'
 import TopicDetail from '@/views/topic/TopicDetail.vue'
 import Home from '@/views/home/home.vue'
 import Collection from '@/views/collection/collection.vue'
-import Login from '@/views/login/login.vue'
+import Loginpassword from '@/views/user/loginpassword.vue'
+import Login from '@/views/user/login.vue'
+import Register from '@/views/user/register.vue'
 import More from '@/views/more/more.vue'
 import Question from '@/views/question/question.vue'
+import Answer from '@/views/answer/answer.vue'
+import Me from '@/views/me/me.vue'
 
 Vue.use(Router)
 
@@ -30,7 +34,15 @@ export default new Router({
       name: 'Login',
       components: {
         // head: Header,
-        main: Login
+        main: Login,
+      }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      components: {
+        // head: Header,
+        main: Register,
       }
     },
     {
@@ -60,6 +72,14 @@ export default new Router({
       }
     },
     {
+      path: '/answer/:answerId',
+      name: 'Answer',
+      components: {
+        main: Answer,
+        // footer: Footer
+      }
+    },
+    {
       path: '/topic',
       name: 'Topic',
       components: {
@@ -80,6 +100,14 @@ export default new Router({
       name: 'Topics',
       components: {
         main: Topics,
+        footer: Footer
+      }
+    },
+    {
+      path: '/me',
+      name: 'Me',
+      components: {
+        main: Me,
         footer: Footer
       }
     }

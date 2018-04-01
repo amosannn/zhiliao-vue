@@ -9,7 +9,7 @@
       <!--</section>-->
       <!--<router-link :to="userInfo? '/profile':'/login'" v-if='signinUp' class="head_login">-->
         <!--<svg class="user_avatar" v-if="userInfo">-->
-          <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>-->
+          <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#login"></use>-->
         <!--</svg>-->
         <!--<span class="login_span" v-else>登录|注册</span>-->
       <!--</router-link>-->

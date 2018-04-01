@@ -1,107 +1,133 @@
 <template>
-  <div class="more-lists">
-    <mu-appbar class="title"  title="知了">
-      <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
-      <span class="appbar-text" slot="center">知了</span>
-      <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
-      <!--icon-loupe-->
-    </mu-appbar>
-
-    <mu-list-item title="Amosannn" describeText="查看或编辑个人主页">
-      <mu-avatar src="https://avatars3.githubusercontent.com/u/16012509?s=400&u=6fe0dd08943216aeff2d3c9d1b8c3e602f6de8e9&v=4" slot="leftAvatar"/>
-      <!--<span slot="describe">-->
+  <div>
+    <!--<mu-appbar class="title"  title="知了">-->
+      <!--<mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>-->
+      <!--<span class="appbar-text" slot="center">知了</span>-->
+      <!--<mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>-->
+      <!--&lt;!&ndash;icon-loupe&ndash;&gt;-->
+    <!--</mu-appbar>-->
+    <zhiliao></zhiliao>
+    <section class="more-lists">
+      <mu-list-item title="Amosannn" describeText="查看或编辑个人主页">
+        <mu-avatar src="https://avatars3.githubusercontent.com/u/16012509?s=400&u=6fe0dd08943216aeff2d3c9d1b8c3e602f6de8e9&v=4" slot="leftAvatar"/>
+        <!--<span slot="describe">-->
         <!--查看或编辑个人主页-->
-      <!--</span>-->
-    </mu-list-item>
-    <mu-divider inset/>
-
-    <mu-list class="more-lists-content">
-      <mu-list-item title="我的创作">
-        <mu-icon slot="left" value="create"/>
+        <!--</span>-->
       </mu-list-item>
       <mu-divider inset/>
-      <mu-list-item title="我的关注">
-        <mu-icon slot="left" value="remove_red_eye"/>
-      </mu-list-item>
-      <mu-divider inset/>
-      <mu-list-item title="我的收藏">
-        <mu-icon slot="left" value="star"/>
-      </mu-list-item><mu-divider/>
-    </mu-list>
+
+      <mu-list class="more-lists-content">
+        <mu-list-item title="我的创作">
+          <mu-icon slot="left" value="create"/>
+        </mu-list-item>
+        <mu-divider inset/>
+        <mu-list-item title="我的关注">
+          <mu-icon slot="left" value="remove_red_eye"/>
+        </mu-list-item>
+        <mu-divider inset/>
+        <mu-list-item title="我的收藏">
+          <mu-icon slot="left" value="star"/>
+        </mu-list-item><mu-divider/>
+      </mu-list>
 
 
-    <mu-list class="more-lists-content">
-      <mu-sub-header>账号设置</mu-sub-header>
-      <mu-list-item title="知了账号" toggleNested :open="false">
-        <mu-list-item slot="nested" title="邮箱" describeText="am****@gmail.com" afterText="已验证">
+      <mu-list class="more-lists-content">
+        <mu-sub-header>账号设置</mu-sub-header>
+        <mu-list-item title="知了账号" toggleNested :open="false">
+          <mu-list-item slot="nested" title="邮箱" describeText="am****@gmail.com" afterText="已验证">
+          </mu-list-item>
+          <mu-list-item slot="nested" title="手机" describeText="+86 132*****0102" afterText="待验证">
+          </mu-list-item>
+          <mu-list-item slot="nested" title="账号密码" describeText="修改密码">
+          </mu-list-item>
         </mu-list-item>
-        <mu-list-item slot="nested" title="手机" describeText="+86 132*****0102" afterText="待验证">
+        <mu-divider/>
+
+        <mu-list-item title="社交账号" toggleNested :open="false">
+          <mu-list-item disableRipple slot="nested" @click="handleToggle('weiboBound')" title="新浪微博" describeText="鲨鱼蘸酱油">
+            <mu-switch v-model="weiboBound"  slot="right"/>
+          </mu-list-item>
+          <mu-list-item disableRipple slot="nested" @click="handleToggle('wechatBound')" title="微信" describeText="尚未绑定">
+            <mu-switch v-model="wechatBound"  slot="right"/>
+          </mu-list-item>
+          <mu-list-item disableRipple slot="nested" @click="handleToggle('qqBound')" title="QQ" describeText="尚未绑定">
+            <mu-switch v-model="qqBound"  slot="right"/>
+          </mu-list-item>
         </mu-list-item>
-        <mu-list-item slot="nested" title="账号密码" describeText="修改密码">
+        <mu-divider/>
+
+        <mu-list-item title="账号安全" toggleNested :open="false">
+          <mu-list-item slot="nested" title="最近活动历史" describeText="*次活动会话" afterText="已验证">
+          </mu-list-item>
+          <mu-list-item slot="nested" title="手机" describeText="+86 132*****0102" afterText="待验证">
+          </mu-list-item>
+          <mu-list-item slot="nested" title="账号密码" describeText="修改密码">
+          </mu-list-item>
         </mu-list-item>
-      </mu-list-item>
+        <mu-divider/>
+      </mu-list>
+
+
+      <mu-list class="more-lists-content">
+        <mu-sub-header>关于与帮助</mu-sub-header>
+        <mu-list-item title="意见反馈">
+          <mu-icon slot="left" value="send"/>
+        </mu-list-item>
+        <mu-divider/>
+        <mu-list-item title="开源许可">
+          <mu-icon slot="left" value="devices"/>
+        </mu-list-item>
+        <mu-divider/>
+        <mu-list-item title="知了协议">
+          <mu-icon slot="left" value="dvr"/>
+        </mu-list-item>
+        <mu-divider/>
+      </mu-list>
+
+      <mu-list class="more-lists-content">
+        <mu-sub-header>切换主题</mu-sub-header>
+        <!--<mu-list-item>-->
+        <mu-list-item disableRipple title="切换主题">
+          <mu-icon-menu slot="right" icon="more_vert" :value="theme" @change="changeTheme">
+            <mu-menu-item title="魅惑紫" value="light" />
+            <mu-menu-item title="深空灰" value="carbon" />
+            <mu-menu-item title="深井绿" value="teal" />
+          </mu-icon-menu>
+        </mu-list-item>
+        <mu-list-item disableRipple title="夜间模式">
+          <mu-switch v-model="isNightMode" @change="nightMode" slot="right"/>
+        </mu-list-item>
+        <mu-divider/>
+      </mu-list>
+
+      <mu-list class="more-lists-content">
+        <mu-sub-header>联系作者</mu-sub-header>
+        <mu-list-item title="amosannn@gmail.com" describeText="电子邮箱">
+          <mu-icon value="email" color="indigo" slot="left"/>
+          <!--<mu-icon value="chat_bubble" slot="right"/>-->
+        </mu-list-item>
+      </mu-list>
       <mu-divider/>
 
-      <mu-list-item title="社交账号" toggleNested :open="false">
-        <mu-list-item disableRipple slot="nested" @click="handleToggle('weiboBound')" title="新浪微博" describeText="鲨鱼蘸酱油">
-          <mu-switch v-model="weiboBound"  slot="right"/>
-        </mu-list-item>
-        <mu-list-item disableRipple slot="nested" @click="handleToggle('wechatBound')" title="微信" describeText="尚未绑定">
-          <mu-switch v-model="wechatBound"  slot="right"/>
-        </mu-list-item>
-        <mu-list-item disableRipple slot="nested" @click="handleToggle('qqBound')" title="QQ" describeText="尚未绑定">
-          <mu-switch v-model="qqBound"  slot="right"/>
-        </mu-list-item>
-      </mu-list-item>
-      <mu-divider/>
+      <mu-list class="more-lists-content">
+        <mu-list-item title="退出登录" class="more-logout" titleClass="more-logout-title"/>
+      </mu-list>
+    </section>
 
-      <mu-list-item title="账号安全" toggleNested :open="false">
-        <mu-list-item slot="nested" title="最近活动历史" describeText="*次活动会话" afterText="已验证">
-        </mu-list-item>
-        <mu-list-item slot="nested" title="手机" describeText="+86 132*****0102" afterText="待验证">
-        </mu-list-item>
-        <mu-list-item slot="nested" title="账号密码" describeText="修改密码">
-        </mu-list-item>
-      </mu-list-item>
-      <mu-divider/>
-    </mu-list>
-
-
-    <mu-list class="more-lists-content">
-      <mu-sub-header>关于与帮助</mu-sub-header>
-      <mu-list-item title="意见反馈">
-        <mu-icon slot="left" value="send"/>
-      </mu-list-item>
-      <mu-divider/>
-      <mu-list-item title="开源许可">
-        <mu-icon slot="left" value="devices"/>
-      </mu-list-item>
-      <mu-divider/>
-      <mu-list-item title="知了协议">
-        <mu-icon slot="left" value="dvr"/>
-      </mu-list-item>
-      <mu-divider/>
-    </mu-list>
-
-
-    <mu-list class="more-lists-content">
-      <mu-sub-header>联系作者</mu-sub-header>
-      <mu-list-item title="amosannn@gmail.com" describeText="电子邮箱">
-        <mu-icon value="email" color="indigo" slot="left"/>
-        <!--<mu-icon value="chat_bubble" slot="right"/>-->
-      </mu-list-item>
-    </mu-list>
-    <mu-divider/>
-
-    <mu-list class="more-lists-content">
-      <mu-list-item title="退出登录" class="more-logout" titleClass="more-logout-title"/>
-    </mu-list>
   </div>
 </template>
 
 <script>
-	export default {
+  import light from '!raw-loader!muse-ui/dist/theme-default.css'
+  import dark from '!raw-loader!muse-ui/dist/theme-dark.css'
+  import carbon from '!raw-loader!muse-ui/dist/theme-carbon.css'
+  import teal from '!raw-loader!muse-ui/dist/theme-teal.css'
+  import zhiliao from '@/components/header/header.vue'
+  export default {
 		name: "more",
+    components:{
+      zhiliao
+    },
     data () {
       return {
         events: false,
@@ -113,11 +139,52 @@
         weiboBound: true,
         wechatBound: false,
         qqBound: false,
+        isNightMode: false,
+        theme: this.getCookie('theme')?this.getCookie('theme'):'carbon',
+        themes: {
+          light,
+          dark,
+          carbon,
+          teal
+        }
       }
     },
     methods: {
       handleToggle (key) {
         this[key] = !this[key]
+      },
+      nightMode (isNight) {
+        console.log("is night "+this.isNightMode+"  "+ isNight);
+        if(isNight === true) {
+          // let oldTheme = this.getCookie('theme');
+          let expireDays = 1000 * 60 * 60 * 24 * 15;
+          // this.setCookie('old_theme', oldTheme, expireDays);
+          this.setCookie('theme', 'dark', expireDays);
+          this.changeTheme('dark');
+          this.isNightMode = true;
+
+        } else if(isNight === false) {
+          let theme = this.getCookie('old_theme');
+          this.delCookie('old_theme');
+          // let expireDays = 1000 * 60 * 60 * 24 * 15;
+          // this.setCookie('theme', theme, expireDays);
+          this.changeTheme(theme);
+          this.isNightMode = false;
+        }
+      },
+      changeTheme (theme) {
+        this.theme = theme
+        const styleEl = this.getThemeStyle()
+        styleEl.innerHTML = this.themes[theme] || ''
+      },
+      getThemeStyle () {
+        const themeId = 'muse-theme'
+        let styleEl = document.getElementById(themeId)
+        if (styleEl) return styleEl
+        styleEl = document.createElement('style')
+        styleEl.id = themeId
+        document.body.appendChild(styleEl)
+        return styleEl
       }
     },
 	}
@@ -143,8 +210,12 @@
   }
 
   .more-lists{
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
+    margin-top: 1.1rem;
+    /*margin-bottom: 1.5rem;*/
+    height: calc(100vh - 2.5rem);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /*overflow: auto;*/
     .more-lists-content{
       margin-bottom: .5rem
     }
