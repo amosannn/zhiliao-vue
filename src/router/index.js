@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
-import index from '@/views/index.vue'
+import store from '@/store/store'
+import * as types from '@/store/types'
 import Footer from '@/components/footer/footGuide.vue'
 import Topic from '@/views/topic/Topic.vue'
 import Topics from '@/views/topic/Topics.vue'
@@ -18,8 +18,7 @@ import Me from '@/views/me/me.vue'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
+  const routes = [
     {
       path: '/',
       name: 'Home',
@@ -61,6 +60,9 @@ export default new Router({
         // head: Header,
         main: More,
         footer: Footer
+      },
+      meta: {
+        requireAuth: true
       }
     },
     {
@@ -112,4 +114,31 @@ export default new Router({
       }
     }
   ]
+
+// 页面刷新时，重新赋值token
+if (window.localStorage.getItem('token')) {
+  store.commit(types.LOGIN, window.localStorage.getItem('token'))
+}
+
+const router = new Router({
+  routes
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    if (store.state.token) {
+      next();
+    }
+    else {
+      next({
+        path: '/login',
+        query: {redirectPath: to.fullPath}
+      })
+    }
+  }
+  else {
+    next();
+  }
+});
+
+export default router;

@@ -78,17 +78,10 @@
       }
     },
     created() {
-      if (this.getCookie('loginToken') === null || this.getCookie('loginToken') === '') {
-        this.$router.push('/login');
-      } else {
-        this.getData()
-      }
-      console.log(JSON.parse(sessionStorage.getItem("userphone")));
       this.getData()
 
     },
     mounted () {
-
       this.trigger = this.$el
     },
     methods:{
@@ -136,10 +129,8 @@
       },
       // 获取feed流数据
       getData() {
-        this.$http({
-          url: "http://127.0.0.1:8080/zhiliao/listMonthHotAnswer",
-          type: "get",
-          data: {
+        this.axios.get('http://127.0.0.1:8080/zhiliao/listMonthHotAnswer',{
+          params: {
             // topicId: this.postId
           }
         }).then( (response) => {

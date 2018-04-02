@@ -34,7 +34,7 @@
     },
     methods:{
       register:function () {
-        this.$http.post('http://127.0.0.1:8080/zhiliao/register',{
+        this.axios.post('http://127.0.0.1:8080/zhiliao/register',{
           username: this.username,
           email: this.email,
           password: this.password

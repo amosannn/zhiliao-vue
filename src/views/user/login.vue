@@ -27,12 +27,13 @@
         <span style="float: left; color: #9E9E9E; padding: .2rem 0 0 .2rem" @click="phoneLogin">手机登录</span>
         <router-link style="float: right; color: #9E9E9E; padding: .2rem .2rem 0 0" to="/register">注册</router-link>
       </div>
-      <mu-snackbar v-if="showAlert" message="请输入正确手机号(demo输入11位即可)" action="确定" @actionClick="hideToast" @close="hideToast"/>
+      <mu-snackbar v-if="showAlert" :message="alertText" action="确定" @actionClick="hideToast" @close="hideToast"/>
     </div>
   </div>
 </template>
 
 <script>
+  import * as types from '@/store/types'
 	export default {
 		name: "login",
     data () {
@@ -46,6 +47,7 @@
         showPhoneLogin: false,
         showEmailLogin: true,
         showUsernameLogin: false,
+        alertText: '请输入正确手机号(demo输入11位即可)',
         // Title_Data: '',
         Welcome: '',
         Welcome_Bottom: '',
@@ -72,19 +74,45 @@
         this.phoneLaBel = ' ';
       },
       login () {
-        if(this.PhoneNumber.length >= '11'){
-          if(this.PhoneNumber.length > '11'){
-            this.$store.commit('LoginPhone',this.PhoneNumber);
-            this.$router.push('/home');
-          }else{
-            this.$store.commit('LoginPhone',this.PhoneNumber)
-            // this.emailLogin()
+        this.axios.post('http://127.0.0.1:8080/zhiliao/login',{
+          email: this.email,
+          username: this.username,
+          password: this.password
+        }).then( (response) => {
+          if( response.data.code === '0000'){
+            this.openToast(response.data.data.login_success);
+            this.item = response.data.data;
+            console.log(this.item);
+            this.$store.commit(types.LOGIN, this.item.token);
+            console.log("21212"+this.$route.query.redirectPath);
+            let redirect = decodeURIComponent(this.$route.query.redirectPath ||'/');
+            this.$router.push({
+              path: redirect
+            });
+          } else if (response.data.code === '0402') {
+            this.openToast(response.data.data.login_error);
           }
-        }else{
-          this.showAlert = true;
-          if (this.snackTimer) clearTimeout(this.snackTimer);
-          this.snackTimer = setTimeout(() => { this.showAlert = false }, 2000)
-        }
+
+        })
+        // if(this.PhoneNumber.length >= '11'){
+        //   if(this.PhoneNumber.length > '11'){
+        //     this.$store.commit('LoginPhone',this.PhoneNumber);
+        //     this.$router.push('/');
+        //   }else{
+        //     this.$store.commit('LoginPhone',this.PhoneNumber)
+        //     // this.emailLogin()
+        //   }
+        // }else{
+        //   this.showAlert = true;
+        //   if (this.snackTimer) clearTimeout(this.snackTimer);
+        //   this.snackTimer = setTimeout(() => { this.showAlert = false }, 2000)
+        // }
+      },
+      openToast (alertText) {
+        this.alertText = alertText;
+        this.showAlert = true;
+        if (this.snackTimer) clearTimeout(this.snackTimer);
+        this.snackTimer = setTimeout(() => { this.showAlert = false }, 2000);
       },
       hideToast () {
         this.showAlert = false;
@@ -95,7 +123,7 @@
       //   this.$router.go(-1);
       // },
       // emailLogin:function () {
-      //   this.$http.post('http://127.0.0.1:8080/zhiliao/login',{
+      //   this.axios.post('http://127.0.0.1:8080/zhiliao/login',{
       //       email: 'amos@qq.com',
       //       username: 'amosamos',
       //       password: 'amosamos'

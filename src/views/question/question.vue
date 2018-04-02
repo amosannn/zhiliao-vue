@@ -88,7 +88,7 @@
     },
     methods: {
       getData(val) {
-        this.$http.get(val,{})
+        this.axios.get(val,{})
           .then( (response) => {
             if( response.data.code === '0000'){
               this.items = response.data.data.question;

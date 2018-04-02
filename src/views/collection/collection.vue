@@ -116,7 +116,7 @@
       },
       // 获取feed流数据
       getData() {
-        this.$http.get('http://127.0.0.1:8080/zhiliao/listCreatingCollection',{
+        this.axios.get('http://127.0.0.1:8080/zhiliao/listCreatingCollection',{
           headers: {
             "Content-Type":"application/json;charset=utf-8"
           },

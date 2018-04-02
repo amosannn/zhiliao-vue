@@ -103,7 +103,7 @@
     },
     methods: {
 		  getData : function () {
-        this.$http({
+        this.axios({
           url: "http://127.0.0.1:8080/zhiliao/topic/topicDetail",
           type: "post",
           data: {
