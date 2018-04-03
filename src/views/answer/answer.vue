@@ -49,7 +49,7 @@
 
     <mu-paper class="foot_nav" :zDepth="5">
       <div class="foot-nav-icon-box">
-        <vue-star class="foot-nav-like" animated="animated shake" color="#2196F3">
+        <vue-star style="margin-left: -.3rem;margin-top: -.45rem;" animated="animated shake" color="#2196F3">
           <!--<img slot="icon" src="../../assets/ic_thumb_up_white_24dp_1x.png" />-->
           <mu-icon slot="icon" value="thumb_up" />
           <!--<i slot="icon" class="fa fa-heart"></i>-->
@@ -154,10 +154,10 @@
     .foot-nav-icon-box{
       height: 48px;
       z-index: 10;
-      .foot-nav-icon-like{
-        margin-left: -.3rem;
-        margin-top: -.45rem;
-      }
+      /*.foot-nav-icon-like{*/
+        /*margin-left: -.3rem;*/
+        /*margin-top: -.45rem;*/
+      /*}*/
       .foot-nav-icon{
         float: right;
         position: relative;
