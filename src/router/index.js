@@ -81,17 +81,17 @@ Vue.use(Router)
         // footer: Footer
       }
     },
+    // {
+    //   path: '/topic',
+    //   name: 'Topic',
+    //   components: {
+    //     main: Topic,
+    //     footer: Footer
+    //   }
+    // },
     {
-      path: '/topic',
+      path: '/topic/:topicId',
       name: 'Topic',
-      components: {
-        main: Topic,
-        footer: Footer
-      }
-    },
-    {
-      path: '/topic/:id',
-      name: 'topic_detail',
       components: {
         main: TopicDetail,
         footer: Footer

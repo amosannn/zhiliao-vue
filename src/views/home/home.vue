@@ -16,23 +16,23 @@
     <!--</mu-paper>-->
     <tabs :tabList=tabList></tabs>
 
-    <mu-refresh-control class="refresh-control" :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
 
     <!-- feed流 -->
-    <mu-list class="content-list">
-      <template v-for="(item,index) in items">
-        <mu-card class="content-card">
+    <section class="content-list">
+      <mu-refresh-control class="refresh-control" :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
+
+      <mu-list>
+        <mu-card class="content-card" v-for="(item,index) in items">
           <mu-card-header class="content-card-header" :title="item.user.username+'回答了问题'" @click.native="jumpToUser(item.user.userId)">
             <mu-avatar class="content-card-avatar" :src="item.user.avatarUrl" :size="30" slot="avatar"/>
           </mu-card-header>
           <!--<mu-divider/>-->
-          <!--<mu-card-media title="Image Title" subTitle="Image Sub Title">-->
-            <!--<img src="http://www.muse-ui.org/images/sun.jpg" />-->
-          <!--</mu-card-media>-->
-          <mu-card-title titleClass="content-card-title" :title="item.question.questionTitle" @click.native="jumpToQuestion(item.question.questionId)"/>
-          <!--<mu-sub-header>{{item.question.questionTitle}}</mu-sub-header>-->
+          <section class="content-card-title">
+            <span class="content-card-title-text" @click="jumpToQuestion(item.question.questionId)">{{item.question.questionTitle}}</span>
+            <!--<span style="font-size: 15px" v-html="item.question.questionContent"></span>-->
+          </section>
           <!--<mu-divider/>-->
-          <mu-card-text class="content-card-text" @click.native="jumpToAnswer(item.answerId)">
+          <mu-card-text class="content-card-answer" @click.native="jumpToAnswer(item.answerId)">
             {{item.answerContent}}
             <!--散落在指尖的阳光，我试着轻轻抓住光影的踪迹，它却在眉宇间投下一片淡淡的阴影。-->
             <!--调皮的阳光掀动了四月的心帘，温暖如约的歌声渐起。-->
@@ -40,20 +40,22 @@
             <!--找到阳光与阴影奏出和谐的旋律。我要用一颗敏感赤诚的心迎接每一缕滑过指尖的阳光！-->
           </mu-card-text>
           <!--<mu-divider/>-->
-          <mu-card-actions>
-            <mu-flat-button class="content-card-action" icon="thumb_up" :label="item.likedCount"/>
-            <mu-flat-button class="content-card-action" icon="thumb_up" label="Action 2"/>
-          </mu-card-actions>
+          <section class="content-card-options">
+            <span class="content-bottom" v-show="item.likedCount">{{item.likedCount}} 赞同</span>
+            <!--<span class="question-answer-bottom" v-show="answer.commentCount">{{answer.commentCount}} 评论 </span>-->
+            <span class="content-bottom"> 发表于 {{item.createTime | dateFormat('YYYY-MM-DD')}}</span>
+          </section>
         </mu-card>
-      </template>
-    </mu-list>
+      </mu-list>
+    </section>
   </div>
 </template>
 
 <script>
   import zhiliao from '@/components/header/header.vue'
   import tabs from '@/components/header/tab.vue'
-	export default {
+  import { dateFormat } from 'vux'
+  export default {
 		name: "home",
     components:{
       zhiliao,
@@ -141,37 +143,47 @@
         })
       }
     },
-
+    filters: {
+      dateFormat
+    }
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .content-list{
-    margin-top: 1.5rem;
+    margin-top: 1.6rem;
     margin-bottom:1.5rem;
+    height: calc(100vh - 3rem);
+    overflow-y: scroll;
     .content-card{
       margin-bottom: .3rem;
-      .content-card-header{
-        height: .5rem;
-        /*vertical-align: middle;*/
-        .content-card-avatar{
-          margin-top: -.15rem;
-        }
+      .mu-card-header{
+        padding: .3rem .5rem .1rem .5rem;
       }
       .content-card-title{
-        /*height: auto;*/
-        font-size: .45rem;
-        /*display:inline-block*/
+        padding: .1rem .4rem .1rem .4rem;
+        .content-card-title-text{
+          font-size: 15px;
+          font-weight: 500;
+          color: black;
+        }
       }
-      .content-card-text{
-        /*height: 3rem;*/
-        margin-top: -.5rem;
+      .content-card-answer{
+        padding: .2rem .4rem .1rem .4rem;
+        color: #212121;
       }
-      .content-card-action{
-        /*height: 1rem;*/
-        margin-top: -.15rem;
+      .content-card-options{
+        padding: .2rem .4rem .3rem .4rem;
+        color: #9E9E9E;
       }
     }
   }
 
+</style>
+
+<style lang="less">
+  /*头像边上的文字*/
+  .mu-card-header-title{
+    margin-top: 5px;
+  }
 </style>
