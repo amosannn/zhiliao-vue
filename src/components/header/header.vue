@@ -24,7 +24,7 @@
   <mu-appbar class="title"  title="知了">
     <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
     <span class="appbar-text" slot="center">知了</span>
-    <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left"/>
+    <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left" @click="jumpToAsk"/>
     <!--icon-loupe-->
   </mu-appbar>
 
@@ -32,7 +32,12 @@
 
 <script>
 	export default {
-		name: "zhiliao"
+		name: "zhiliao",
+    methods: {
+		  jumpToAsk(){
+        this.$router.push('/ask');
+      }
+    }
 	}
 </script>
 

@@ -10,8 +10,12 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-carbon.css'
 import 'material-design-icons/iconfont/material-icons.css';
+import vueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
 
 Vue.use(MuseUI)
+Vue.use(vueQuillEditor)
 
 axios.defaults.withCredentials=true;
 Vue.prototype.axios = axios;
