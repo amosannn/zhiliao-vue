@@ -5,7 +5,7 @@
     <section class="answer-container">
       <mu-card class="question-title">
         <section>
-          <span class="question-title-text">{{item.question.questionTitle}}</span>
+          <span class="question-title-text" @click="jumpToQuestion()">{{item.question.questionTitle}}</span>
           <span class="question-title-desc" v-html="item.question.questionContent"></span>
         </section>
       </mu-card>
@@ -14,9 +14,7 @@
           <mu-avatar :src="item.user.avatarUrl" slot="avatar"/>
         </mu-card-header>
 
-        <mu-card-text class="answer-content-text">
-          {{item.answerContent}}
-        </mu-card-text>
+        <mu-card-text class="answer-content-text" v-html="item.answerContent"></mu-card-text>
         <section class="answer-content-others">
           <!--<vue-star animated="animated shake" color="#d32f2f">-->
             <!--&lt;!&ndash;<img slot="icon" src="../../assets/ic_thumb_up_white_24dp_1x.png" />&ndash;&gt;-->
@@ -75,7 +73,7 @@
   import VueStar from 'vue-star'
   import MuIcon from "muse-ui/src/icon/icon";
   export default {
-    name: "question",
+    name: "answer",
     components: {
       MuIcon,
       zhiliao,
@@ -89,6 +87,7 @@
     },
     mounted() {
       this.answerId = this.$route.params.answerId;
+      // this.questionId = this.$route.params.questionId?this.$route.params.questionId:'';
       let url = "http://127.0.0.1:8080/zhiliao/answer/" + this.answerId;
       this.getData(url);
 
@@ -99,9 +98,13 @@
           .then( (response) => {
           if( response.data.code === '0000'){
             this.item = response.data.data.answer;
+            this.questionId = this.item.question.questionId;
             console.log(this.item)
           }
         })
+      },
+      jumpToQuestion() {
+        this.$router.push('/question/' + this.questionId)
       }
     },
     filters: {
@@ -181,6 +184,10 @@
         /*margin-top: 4px;*/
       }
     }
+  }
+  img {
+    width: 100%;
+    vertical-align: middle;
   }
 
 </style>

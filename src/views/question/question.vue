@@ -25,7 +25,7 @@
         </section>
         <mu-card-actions>
           <mu-flat-button label="邀请回答"/>
-          <mu-flat-button label="添加回答"/>
+          <mu-flat-button label="添加回答" @click.native="answerQuestion"/>
         </mu-card-actions>
       </mu-card>
 
@@ -53,8 +53,8 @@
         <!--<mu-card-media class="question-answer-media">-->
           <!--<img src="http://www.muse-ui.org/images/sun.jpg" />-->
         <!--</mu-card-media>-->
-        <mu-card-text style="padding: 0 .3rem .2rem .3rem;" v-html="answer.answerContent"></mu-card-text>
-        <section style="padding: .2rem;">
+        <mu-card-text style="padding: 0 .3rem .2rem .3rem;" @click.native="jumpToAnswer(answer.answerId)" v-html="answer.answerContent"></mu-card-text>
+        <section style="padding: .2rem;"  @click="jumpToAnswer(answer.answerId)">
           <span class="question-answer-bottom" v-show="answer.likedCount">{{answer.likedCount}} 赞同</span>
           <span class="question-answer-bottom" v-show="answer.commentCount">{{answer.commentCount}} 评论 </span>
           <span class="question-answer-bottom"> 发表于 {{answer.createTime | dateFormat('YYYY-MM-DD')}}</span>
@@ -168,6 +168,15 @@
         }
 
       },
+      // 添加回答
+      answerQuestion(){
+        this.$router.push({
+          name: 'AnswerQuestion',
+          params: {
+            questionId: this.questionId
+          }
+        })
+      },
       // 跳转至话题页
       jumpToTopic(topicId) {
         this.$router.push({
@@ -176,6 +185,10 @@
             topicId: topicId
           }
         });
+      },
+      // 跳转至回答页
+      jumpToAnswer(answerId) {
+        this.$router.push('/answer/' + answerId);
       },
     },
     filters: {
@@ -264,7 +277,11 @@
     .mu-card-header-title{
       margin-top: 5px;
     }
+  }
 
+  img {
+    width: 100%;
+    vertical-align: middle;
   }
 
 </style>

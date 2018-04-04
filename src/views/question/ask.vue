@@ -8,7 +8,7 @@
     </mu-appbar>
     <section class="ask-container">
       <div style="padding: 0 15px" v-show="isWriting">
-        <mu-text-field underlineFocusClass="ask-title-underline" class="ask-title" hintText="请输入标题" fullWidth v-model="questionTitle"/>
+        <mu-text-field class="ask-title" hintText="请输入标题" fullWidth v-model="questionTitle"/>
       </div>
       <quill-editor :options="editorOption" v-model="questionContent" v-show="isWriting"
                     ref="QuillEditor"
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-  // import QEditor from '@/components/common/QEditor'
 	export default {
 		name: "ask",
     components:{
@@ -150,9 +149,6 @@
     padding: .3rem;
     .ask-title{
       /*padding: 0 15px;*/
-    }
-    .ask-title-underline{
-      color: #616161;
     }
   }
 

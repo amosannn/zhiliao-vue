@@ -8,12 +8,12 @@ import Topics from '@/views/topic/Topics.vue'
 import TopicDetail from '@/views/topic/TopicDetail.vue'
 import Home from '@/views/home/home.vue'
 import Collection from '@/views/collection/collection.vue'
-import Loginpassword from '@/views/user/loginpassword.vue'
 import Login from '@/views/user/login.vue'
 import Register from '@/views/user/register.vue'
 import More from '@/views/more/more.vue'
 import Ask from '@/views/question/ask.vue'
 import Question from '@/views/question/question.vue'
+import AnswerQuestion from '@/views/answer/answerQuestion.vue'
 import Answer from '@/views/answer/answer.vue'
 import Me from '@/views/me/me.vue'
 
@@ -79,6 +79,14 @@ Vue.use(Router)
       name: 'Question',
       components: {
         main: Question,
+        // footer: Footer
+      }
+    },
+    {
+      path: '/answer',
+      name: 'AnswerQuestion',
+      components: {
+        main: AnswerQuestion,
         // footer: Footer
       }
     },
