@@ -32,7 +32,7 @@
             <!--<span style="font-size: 15px" v-html="item.question.questionContent"></span>-->
           </section>
           <!--<mu-divider/>-->
-          <mu-card-text v-html="item.answerContent" class="content-card-answer" @click.native="jumpToAnswer(item.answerId, item.question.questionId)">
+          <mu-card-text v-html="delHtmlTag(item.answerContent)" class="content-card-answer" @click.native="jumpToAnswer(item.answerId, item.question.questionId)">
             <!--散落在指尖的阳光，我试着轻轻抓住光影的踪迹，它却在眉宇间投下一片淡淡的阴影。-->
             <!--调皮的阳光掀动了四月的心帘，温暖如约的歌声渐起。-->
             <!--似乎在诉说着，我也可以在漆黑的角落里，找到阴影背后的阳光，-->
@@ -142,6 +142,7 @@
           }
         })
       },
+
     },
     filters: {
       dateFormat
@@ -171,6 +172,11 @@
       .content-card-answer{
         padding: .2rem .4rem .1rem .4rem;
         color: #212121;
+        /* 多行文本溢出显示省略号 */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
       }
       .content-card-options{
         padding: .2rem .4rem .3rem .4rem;

@@ -30,6 +30,14 @@ new Vue({
   template: '<App/>'
 })
 
+
+// 公共方法
+
+// 去除html标签 配合v-html使用
+Vue.prototype.delHtmlTag = (str) => {
+  return str.replace(/<[^>]+>/g,"");
+}
+
 //设置cookie
 Vue.prototype.setCookie = (c_name, value, expiredays) => {
   var exdate = new Date();

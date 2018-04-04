@@ -53,7 +53,7 @@
         <!--<mu-card-media class="question-answer-media">-->
           <!--<img src="http://www.muse-ui.org/images/sun.jpg" />-->
         <!--</mu-card-media>-->
-        <mu-card-text style="padding: 0 .3rem .2rem .3rem;" @click.native="jumpToAnswer(answer.answerId)" v-html="answer.answerContent"></mu-card-text>
+        <mu-card-text class="question-answer-text" @click.native="jumpToAnswer(answer.answerId)" v-html="delHtmlTag(answer.answerContent)"></mu-card-text>
         <section style="padding: .2rem;"  @click="jumpToAnswer(answer.answerId)">
           <span class="question-answer-bottom" v-show="answer.likedCount">{{answer.likedCount}} 赞同</span>
           <span class="question-answer-bottom" v-show="answer.commentCount">{{answer.commentCount}} 评论 </span>
@@ -257,6 +257,15 @@
     .question-answer{
       margin-top: .3rem;
       margin-bottom: .3rem;
+      .question-answer-text{
+        padding: 0 .4rem .1rem .4rem;
+
+        /* 多行文本溢出显示省略号 */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+      }
       .question-answer-bottom{
         padding: .2rem
       }
