@@ -100,7 +100,7 @@
       }
     },
     beforeMount () {
-      this.getData()
+      // this.getData()
       this.loading = true
     }
 	}

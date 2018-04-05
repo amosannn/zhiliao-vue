@@ -5,7 +5,6 @@ import * as types from '@/store/types'
 import Footer from '@/components/footer/footGuide.vue'
 import Topic from '@/views/topic/Topic.vue'
 import Topics from '@/views/topic/Topics.vue'
-import TopicDetail from '@/views/topic/TopicDetail.vue'
 import Home from '@/views/home/home.vue'
 import Collection from '@/views/collection/collection.vue'
 import Login from '@/views/user/login.vue'
@@ -98,20 +97,12 @@ Vue.use(Router)
         // footer: Footer
       }
     },
-    // {
-    //   path: '/topic',
-    //   name: 'Topic',
-    //   components: {
-    //     main: Topic,
-    //     footer: Footer
-    //   }
-    // },
     {
       path: '/topic/:topicId',
       name: 'Topic',
       components: {
-        main: TopicDetail,
-        footer: Footer
+        main: Topic,
+        // footer: Footer
       }
     },
     {
