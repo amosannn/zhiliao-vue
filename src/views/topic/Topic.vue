@@ -1,5 +1,5 @@
 <template>
-  <div  style="background-color:#EEEEEE;">
+  <div style="background-color:#EEEEEE;">
     <mu-appbar class="appbar-title" :title="barTitle">
       <mu-icon-button icon="close" slot="left" @click="goBack"/>
     </mu-appbar>

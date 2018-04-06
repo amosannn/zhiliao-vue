@@ -53,7 +53,7 @@
           <!--<i slot="icon" class="fa fa-heart"></i>-->
         </vue-star>
         <mu-icon-button class="foot-nav-icon" icon="chat_bubble_outline"/>
-        <mu-icon-button class="foot-nav-icon" icon="star_border"/>
+        <mu-icon-button class="foot-nav-icon" icon="star_border" @click="openCollection"></mu-icon-button>
         <mu-icon-button class="foot-nav-icon" icon="favorite_border"/>
       </div>
       <div class="foot-nav-text-box">
@@ -62,6 +62,23 @@
         <span class="foot-nav-text">感谢</span>
       </div>
     </mu-paper>
+
+    <!-- 收藏夹弹窗 -->
+    <mu-dialog :open="collectionDialog" @close="closeCollection" title="选择收藏夹" scrollable>
+      <mu-menu>
+        <mu-menu-item :title="collection.collectionName" v-for="collection, index in collectionList" :key="index" @click="collectAnswer(collection.collectionId, item.answerId)"/>
+      </mu-menu>
+      <mu-flat-button primary label="关闭" @click="closeCollection" slot="actions"/>
+    </mu-dialog>
+
+    <!-- 取消收藏弹窗 -->
+    <mu-dialog :open="uncollectDialog" title="你想取消收藏吗？" @close="closeUncollectDialog">
+      <mu-flat-button slot="actions" @click="closeUncollectDialog" primary label="我不"/>
+      <mu-flat-button slot="actions" primary @click="uncollectAnswer" label="当然"/>
+    </mu-dialog>
+
+    <mu-snackbar v-if="showAlert" :message="alertText" action="确定" @actionClick="hideToast" @close="hideToast"/>
+
     <!--<zhiliao-foot-guide></zhiliao-foot-guide>-->
   </div>
 </template>
@@ -83,6 +100,12 @@
     data () {
       return {
         item: null,
+        collectionDialog: false,
+        uncollectDialog: false,
+        collectionList: [],
+        canCollect: true,
+        showAlert: false,
+        alertText: ''
       }
     },
     mounted() {
@@ -105,7 +128,94 @@
       },
       jumpToQuestion() {
         this.$router.push('/question/' + this.questionId)
-      }
+      },
+      // 打开收藏夹
+      openCollection() {
+        this.axios.get('http://127.0.0.1:8080/zhiliao/listCreatingCollection',{
+          // page: page,
+        }).then( (response) => {
+          if( response.data.code === '0000'){
+            this.collectionList = response.data.data.collectionList?response.data.data.collectionList:[];
+          }
+        });
+        this.collectionDialog = true
+      },
+      closeCollection () {
+        this.collectionDialog = false
+      },
+      // 判断是否已收藏某回答
+      isCollected(collectionId, answerId) {
+        this.axios.post('http://127.0.0.1:8080/zhiliao/collectionContainAnswer',{
+          collectionId: collectionId,
+          answerId: answerId
+        }).then( (response) => {
+          if(response.data.code === '0000') {
+            if (response.data.data.collectStatus){
+              console.log('进来 '+this.canCollect);
+              this.canCollect = false;
+              this.openToast('该收藏夹已包含该问题！');
+            } else {
+              // this.openToast('不包含，可以收藏哟～');
+              this.canCollect = true;
+            }
+          }
+        })
+      },
+      // 添加收藏夹
+      collectAnswer(collectionId, answerId){
+        console.log('判断前 --- '+this.canCollect);
+        this.isCollected(collectionId, answerId);
+        console.log('判断后 --- '+this.canCollect);
+        if(this.canCollect) {
+          this.axios.post('http://127.0.0.1:8080/zhiliao/collectAnswer',{
+            collectionId: collectionId,
+            answerId: answerId
+          }).then( (response) => {
+            if(response.data.code === '0000') {
+              if(response.data.data.collectStatus){
+                this.openToast('收藏成功！');
+                this.collectionDialog = false;
+              } else {
+                this.openToast('系统异常，收藏失败！');
+              }
+            }
+          })
+        } else {
+          this.uncollectDialog = true;
+        }
+      },
+      closeUncollectDialog() {
+        this.uncollectDialog = false
+      },
+      uncollectAnswer() {
+        // this.isCollected(collectionId, answerId);
+        console.log(this.canCollect)
+        if(!this.canCollect) {
+          this.axios.post('http://127.0.0.1:8080/zhiliao/uncollectAnswer', {
+            collectionId: collectionId,
+            answerId: answerId
+          }).then((response) => {
+            if (response.data.code === '0000') {
+              if (response.data.data.status) {
+                this.openToast('取消收藏成功！');
+                this.uncollectDialog = false;
+              } else {
+                this.openToast('系统异常，取消收藏失败！');
+              }
+            }
+          })
+        }
+      },
+      openToast (alertText) {
+        this.alertText = alertText;
+        this.showAlert = true;
+        if (this.snackTimer) clearTimeout(this.snackTimer);
+        this.snackTimer = setTimeout(() => { this.showAlert = false }, 2000);
+      },
+      hideToast () {
+        this.showAlert = false;
+        if (this.snackTimer) clearTimeout(this.snackTimer)
+      },
     },
     filters: {
       dateFormat

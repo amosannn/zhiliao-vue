@@ -25,9 +25,10 @@
           <mu-icon slot="left" value="remove_red_eye"/>
         </mu-list-item>
         <mu-divider inset/>
-        <mu-list-item title="我的收藏">
+        <mu-list-item title="我的收藏" @click.native="jumpToCollection()">
           <mu-icon slot="left" value="star"/>
-        </mu-list-item><mu-divider/>
+        </mu-list-item>
+        <mu-divider/>
       </mu-list>
 
 
@@ -185,7 +186,11 @@
         styleEl.id = themeId
         document.body.appendChild(styleEl)
         return styleEl
-      }
+      },
+      // 我的收藏
+      jumpToCollection() {
+        this.$router.push("/collection");
+      },
     },
 	}
 </script>

@@ -6,7 +6,9 @@ import Footer from '@/components/footer/footGuide.vue'
 import Topic from '@/views/topic/Topic.vue'
 import Topics from '@/views/topic/Topics.vue'
 import Home from '@/views/home/home.vue'
+import AddCollection from '@/views/collection/addCollection.vue'
 import Collection from '@/views/collection/collection.vue'
+import CollectionDetail from '@/views/collection/collectionDetail.vue'
 import Login from '@/views/user/login.vue'
 import Register from '@/views/user/register.vue'
 import More from '@/views/more/more.vue'
@@ -45,11 +47,29 @@ Vue.use(Router)
       }
     },
     {
+      path: '/addCollection',
+      name: 'AddCollection',
+      components: {
+        // head: Header,
+        main: AddCollection,
+        footer: Footer
+      }
+    },
+    {
       path: '/collection',
       name: 'Collection',
       components: {
         // head: Header,
         main: Collection,
+        footer: Footer
+      }
+    },
+    {
+      path: '/collection/:collectionId',
+      name: 'CollectionDetail',
+      components: {
+        // head: Header,
+        main: CollectionDetail,
         footer: Footer
       }
     },

@@ -4,30 +4,34 @@
       <mu-icon-button icon="arrow_back" slot="left" @click="goBack"/>
     </mu-appbar>
 
-    <section class="collection-list-container">
+    <section class="topic-dynamic-container">
       <!--<mu-refresh-control class="refresh-control" :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>-->
 
       <mu-list>
-        <mu-card class="content-card" v-for="(collection,index) in collectionList" @click.native="jumpToCollection(collection.collectionId)">
+        <mu-card class="content-card" v-model="answerList" v-for="(item,index) in answerList">
+          <mu-card-header class="content-card-header" :title="item.user.username+'回答了问题'" @click.native="jumpToUser(item.user.userId)">
+            <mu-avatar class="content-card-avatar" :src="item.user.avatarUrl" :size="30" slot="avatar"/>
+          </mu-card-header>
           <section class="content-card-title">
-            <span class="content-card-title-text">{{collection.collectionName}}</span>
+            <span class="content-card-title-text" @click="jumpToQuestion(item.question.questionId)">{{item.question.questionTitle}}</span>
             <!--<span style="font-size: 15px" v-html="item.question.questionContent"></span>-->
           </section>
+          <mu-card-text v-html="delHtmlTag(item.answerContent)" class="content-card-answer" @click.native="jumpToAnswer(item.answerId, item.question.questionId)">
+          </mu-card-text>
           <section class="content-card-options">
-            <span class="content-bottom">{{collection.answerCount}} 个内容 </span>
+            <span class="content-bottom" v-show="item.likedCount">{{item.likedCount}} 赞同</span>
+            <!--<span class="question-answer-bottom" v-show="answer.commentCount">{{answer.commentCount}} 评论 </span>-->
+            <span class="content-bottom"> 发表于 {{item.createTime | dateFormat('YYYY-MM-DD')}}</span>
           </section>
         </mu-card>
       </mu-list>
     </section>
-
-    <mu-float-button class="add-button" icon="add" @click.native="jumpToAddCollection"/>
-
   </div>
 </template>
 
 <script>
   export default {
-		name: "collection",
+    name: "collection-detail",
     data () {
       return {
         barTitle: '我的收藏',
@@ -35,13 +39,14 @@
       }
     },
     mounted() {
+      this.collectionId = this.$route.params.collectionId;
       console.log(this.topicId);
       // this.questionId = this.$route.params.questionId?this.$route.params.questionId:'';
-      this.getData();
+      this.getData(this.collectionId);
     },
     methods: {
-      getData() {
-        this.axios.get('http://127.0.0.1:8080/zhiliao/listCreatingCollection',{
+      getData(collectionId) {
+        this.axios.get('http://127.0.0.1:8080/zhiliao/collection/'+collectionId,{
           // page: page,
         }).then( (response) => {
           if( response.data.code === '0000'){
@@ -51,12 +56,6 @@
       },
       goBack(){
         this.$router.go(-1);
-      },
-      jumpToAddCollection() {
-        this.$router.push("/addCollection/");
-      },
-      jumpToCollection(collectionId) {
-        this.$router.push("/collection/"+collectionId);
       },
       // 头像跳转到用户页
       jumpToUser(userId) {
@@ -118,11 +117,11 @@
 
       },
     },
-	}
+  }
 </script>
 
 <style lang="less" scoped>
-  .collection-list-container{
+  .topic-all-question-container{
     /*margin-top: 1rem;*/
     height: calc(100vh - 2.65rem);
     overflow-y: scroll;
@@ -141,12 +140,5 @@
         color: #9E9E9E;
       }
     }
-  }
-
-  .add-button{
-    z-index: 10;
-    bottom: 2rem;
-    margin-right: 1rem;
-    float: right;
   }
 </style>
