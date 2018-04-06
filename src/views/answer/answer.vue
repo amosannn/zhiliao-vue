@@ -74,7 +74,7 @@
     <!-- 取消收藏弹窗 -->
     <mu-dialog :open="uncollectDialog" title="你想取消收藏吗？" @close="closeUncollectDialog">
       <mu-flat-button slot="actions" @click="closeUncollectDialog" primary label="我不"/>
-      <mu-flat-button slot="actions" primary @click="uncollectAnswer" label="当然"/>
+      <mu-flat-button slot="actions" primary @click="uncollectAnswer(uncollectCollectionId, item.answerId)" label="当然"/>
     </mu-dialog>
 
     <mu-snackbar v-if="showAlert" :message="alertText" action="确定" @actionClick="hideToast" @close="hideToast"/>
@@ -104,6 +104,7 @@
         uncollectDialog: false,
         collectionList: [],
         canCollect: true,
+        uncollectCollectionId: '',
         showAlert: false,
         alertText: ''
       }
@@ -163,31 +164,42 @@
       },
       // 添加收藏夹
       collectAnswer(collectionId, answerId){
-        console.log('判断前 --- '+this.canCollect);
-        this.isCollected(collectionId, answerId);
-        console.log('判断后 --- '+this.canCollect);
-        if(this.canCollect) {
-          this.axios.post('http://127.0.0.1:8080/zhiliao/collectAnswer',{
-            collectionId: collectionId,
-            answerId: answerId
-          }).then( (response) => {
-            if(response.data.code === '0000') {
-              if(response.data.data.collectStatus){
-                this.openToast('收藏成功！');
-                this.collectionDialog = false;
-              } else {
-                this.openToast('系统异常，收藏失败！');
-              }
+        this.axios.post('http://127.0.0.1:8080/zhiliao/collectionContainAnswer',{
+          collectionId: collectionId,
+          answerId: answerId
+        }).then( (response) => {
+          if(response.data.code === '0000') {
+            if (response.data.data.collectStatus){
+              // 如果收藏夹已包含该问题 则弹出取消收藏的窗口
+              console.log('进来 '+this.canCollect);
+              this.canCollect = false;
+              this.uncollectCollectionId = collectionId;
+              this.uncollectDialog = true;
+              this.openToast('该收藏夹已包含该问题！');
+            } else {
+              // 如果收藏夹未包含该问题 则将该问题添加至收藏夹
+              this.axios.post('http://127.0.0.1:8080/zhiliao/collectAnswer',{
+                collectionId: collectionId,
+                answerId: answerId
+              }).then( (response) => {
+                if(response.data.code === '0000') {
+                  if(response.data.data.collectStatus){
+                    // 收藏成功 关闭收藏夹列表窗口
+                    this.openToast('收藏成功！');
+                    this.collectionDialog = false;
+                  } else {
+                    this.openToast('系统异常，收藏失败！');
+                  }
+                }
+              })
             }
-          })
-        } else {
-          this.uncollectDialog = true;
-        }
+          }
+        });
       },
       closeUncollectDialog() {
         this.uncollectDialog = false
       },
-      uncollectAnswer() {
+      uncollectAnswer(collectionId, answerId) {
         // this.isCollected(collectionId, answerId);
         console.log(this.canCollect)
         if(!this.canCollect) {
@@ -196,7 +208,7 @@
             answerId: answerId
           }).then((response) => {
             if (response.data.code === '0000') {
-              if (response.data.data.status) {
+              if (response.data.data.uncollectStatus) {
                 this.openToast('取消收藏成功！');
                 this.uncollectDialog = false;
               } else {

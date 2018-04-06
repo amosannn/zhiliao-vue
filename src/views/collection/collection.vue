@@ -122,8 +122,15 @@
 </script>
 
 <style lang="less" scoped>
+  .appbar-title{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
   .collection-list-container{
-    /*margin-top: 1rem;*/
+    margin-top: 1.2rem;
     height: calc(100vh - 2.65rem);
     overflow-y: scroll;
     .content-card{

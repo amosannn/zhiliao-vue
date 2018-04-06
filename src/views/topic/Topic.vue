@@ -401,11 +401,12 @@
     left: 0;
     right: 0;
     z-index: 10;
+    height: 1.35rem;
   }
 
   .appbar-tabs-paper{
     .topic-tab{
-      margin-top: 1.37rem;
+      margin-top: 1.35rem;
       height: 1rem;
       position: fixed;
       top: 0;

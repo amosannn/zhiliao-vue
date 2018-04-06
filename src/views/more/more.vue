@@ -90,7 +90,8 @@
         <!--<mu-list-item>-->
         <mu-list-item disableRipple title="切换主题">
           <mu-icon-menu slot="right" icon="more_vert" :value="theme" @change="changeTheme">
-            <mu-menu-item title="魅惑紫" value="light" />
+            <mu-menu-item title="天际蓝" value="light" />
+            <mu-menu-item title="魅惑紫" value="purple" />
             <mu-menu-item title="深空灰" value="carbon" />
             <mu-menu-item title="深井绿" value="teal" />
           </mu-icon-menu>
@@ -119,7 +120,8 @@
 </template>
 
 <script>
-  import light from '!raw-loader!muse-ui/dist/theme-default.css'
+  import light from '!raw-loader!muse-ui/dist/theme-light.css'
+  import purple from '!raw-loader!muse-ui/dist/theme-default.css'
   import dark from '!raw-loader!muse-ui/dist/theme-dark.css'
   import carbon from '!raw-loader!muse-ui/dist/theme-carbon.css'
   import teal from '!raw-loader!muse-ui/dist/theme-teal.css'
@@ -144,6 +146,7 @@
         theme: this.getCookie('theme')?this.getCookie('theme'):'carbon',
         themes: {
           light,
+          purple,
           dark,
           carbon,
           teal

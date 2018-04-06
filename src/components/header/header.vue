@@ -21,7 +21,7 @@
       <!--<slot name="changecity"></slot>-->
       <!--<slot name="changeLogin"></slot>-->
     <!--</header>-->
-  <mu-appbar class="title"  title="知了">
+  <mu-appbar class="title"  title="知了" @click="jumpToHome">
     <mu-flat-button color="white" label="搜索" labelClass="appbar-search-block" icon="search" slot="right"/>
     <span class="appbar-text" slot="center">知了</span>
     <mu-flat-button color="white" label="提问" labelClass="appbar-search-block" icon="control_point" slot="left" @click="jumpToAsk"/>
@@ -36,6 +36,9 @@
     methods: {
 		  jumpToAsk(){
         this.$router.push('/ask');
+      },
+      jumpToHome() {
+        this.$router.push('/home');
       }
     }
 	}

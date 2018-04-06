@@ -4,24 +4,33 @@
       <mu-icon-button icon="arrow_back" slot="left" @click="goBack"/>
     </mu-appbar>
 
-    <section class="topic-dynamic-container">
+    <section class="collection-detail-container">
       <!--<mu-refresh-control class="refresh-control" :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>-->
 
+      <mu-card>
+        <!--<section class="topic-desc-head">-->
+          <!--<mu-raised-button class="topic-follow-btn" @click.native="followTopic(topicId)" :label="followBtnLabel" :backgroundColor="followBtnColor"/>-->
+        <!--</section>-->
+        <mu-card-text v-if="collection.collectionDesc" v-html="delHtmlTag(collection.collectionDesc)"></mu-card-text>
+        <mu-card-text class="collection-answer-count" v-if="collection.answerCount">共 {{collection.answerCount}} 个内容</mu-card-text>
+      </mu-card>
+
       <mu-list>
-        <mu-card class="content-card" v-model="answerList" v-for="(item,index) in answerList">
-          <mu-card-header class="content-card-header" :title="item.user.username+'回答了问题'" @click.native="jumpToUser(item.user.userId)">
-            <mu-avatar class="content-card-avatar" :src="item.user.avatarUrl" :size="30" slot="avatar"/>
+        <mu-card class="content-card" v-model="answerList" v-for="(answer,index) in answerList">
+          <mu-card-header class="content-card-header" :title="answer.user.username" @click.native="jumpToUser(answer.user.userId)">
+            <mu-avatar class="content-card-avatar" :src="answer.user.avatarUrl" :size="30" slot="avatar"/>
           </mu-card-header>
           <section class="content-card-title">
-            <span class="content-card-title-text" @click="jumpToQuestion(item.question.questionId)">{{item.question.questionTitle}}</span>
+            <span class="content-card-title-text" @click="jumpToQuestion(answer.question.questionId)">{{answer.question.questionTitle}}</span>
             <!--<span style="font-size: 15px" v-html="item.question.questionContent"></span>-->
           </section>
-          <mu-card-text v-html="delHtmlTag(item.answerContent)" class="content-card-answer" @click.native="jumpToAnswer(item.answerId, item.question.questionId)">
+          <mu-card-text v-html="delHtmlTag(answer.answerContent)" class="content-card-answer" @click.native="jumpToAnswer(answer.answerId, answer.question.questionId)">
           </mu-card-text>
           <section class="content-card-options">
-            <span class="content-bottom" v-show="item.likedCount">{{item.likedCount}} 赞同</span>
+            <span class="content-bottom" v-show="answer.question.answerCount">{{answer.question.answerCount}} 回答 · </span>
+            <span class="content-bottom" v-show="answer.question.followedCount">{{answer.question.followedCount}} 关注 · </span>
             <!--<span class="question-answer-bottom" v-show="answer.commentCount">{{answer.commentCount}} 评论 </span>-->
-            <span class="content-bottom"> 发表于 {{item.createTime | dateFormat('YYYY-MM-DD')}}</span>
+            <span class="content-bottom" :id="'question'+answer.question.questionId" @click="followQuestion(answer.question.questionId)">关注问题</span>
           </section>
         </mu-card>
       </mu-list>
@@ -35,7 +44,8 @@
     data () {
       return {
         barTitle: '我的收藏',
-        collectionList: []
+        collection:  null,
+        answerList: []
       }
     },
     mounted() {
@@ -50,7 +60,9 @@
           // page: page,
         }).then( (response) => {
           if( response.data.code === '0000'){
-            this.collectionList = response.data.data.collectionList?response.data.data.collectionList:[];
+            this.barTitle = response.data.data.collection.collectionName;
+            this.collection = response.data.data.collection;
+            this.answerList = response.data.data.answerList;
           }
         })
       },
@@ -121,19 +133,34 @@
 </script>
 
 <style lang="less" scoped>
-  .topic-all-question-container{
-    /*margin-top: 1rem;*/
-    height: calc(100vh - 2.65rem);
+  .collection-detail-container{
+    /*margin-top: 2.35rem;*/
+    height: calc(100vh - 2.4rem);
     overflow-y: scroll;
+    .collection-answer-count{
+      padding: 0 16px .3rem;
+    }
     .content-card{
       margin-bottom: .3rem;
+      .mu-card-header{
+        padding: .3rem .5rem .1rem .5rem;
+      }
       .content-card-title{
-        padding: .4rem .4rem .1rem .4rem;
+        padding: .1rem .4rem .1rem .4rem;
         .content-card-title-text{
           font-size: 15px;
           font-weight: 500;
           color: black;
         }
+      }
+      .content-card-answer{
+        padding: .2rem .4rem .1rem .4rem;
+        color: #212121;
+        /* 多行文本溢出显示省略号 */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
       }
       .content-card-options{
         padding: .2rem .4rem .3rem .4rem;
