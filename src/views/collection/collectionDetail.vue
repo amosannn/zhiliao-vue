@@ -133,9 +133,16 @@
 </script>
 
 <style lang="less" scoped>
+  .appbar-title{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
   .collection-detail-container{
-    /*margin-top: 2.35rem;*/
-    height: calc(100vh - 2.4rem);
+    margin-top: 1.2rem;
+    height: calc(100vh - 2.65rem);
     overflow-y: scroll;
     .collection-answer-count{
       padding: 0 16px .3rem;

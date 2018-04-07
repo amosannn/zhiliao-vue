@@ -82,7 +82,7 @@
           if( response.data.code === '0000'){
             this.openToast(response.data.data.login_success);
             this.item = response.data.data;
-            console.log(this.item);
+            console.log("111"+this.item);
             this.$store.commit(types.LOGIN, this.item.token);
             console.log("21212"+this.$route.query.redirectPath);
             let redirect = decodeURIComponent(this.$route.query.redirectPath ||'/');

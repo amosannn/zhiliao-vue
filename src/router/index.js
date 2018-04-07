@@ -16,7 +16,7 @@ import Ask from '@/views/question/ask.vue'
 import Question from '@/views/question/question.vue'
 import AnswerQuestion from '@/views/answer/answerQuestion.vue'
 import Answer from '@/views/answer/answer.vue'
-import Me from '@/views/me/me.vue'
+import Profile from '@/views/user/profile.vue'
 
 Vue.use(Router)
 
@@ -134,10 +134,10 @@ Vue.use(Router)
       }
     },
     {
-      path: '/me',
-      name: 'Me',
+      path: '/profile/:userId',
+      name: 'Profile',
       components: {
-        main: Me,
+        main: Profile,
         footer: Footer
       }
     }

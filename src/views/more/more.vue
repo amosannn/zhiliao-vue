@@ -8,8 +8,8 @@
     <!--</mu-appbar>-->
     <zhiliao></zhiliao>
     <section class="more-lists">
-      <mu-list-item title="Amosannn" describeText="查看或编辑个人主页">
-        <mu-avatar src="https://avatars3.githubusercontent.com/u/16012509?s=400&u=6fe0dd08943216aeff2d3c9d1b8c3e602f6de8e9&v=4" slot="leftAvatar"/>
+      <mu-list-item :title="user.username" describeText="查看或编辑个人主页" @click="jumpToProfile">
+        <mu-avatar :src="user.avatarUrl" slot="leftAvatar"/>
         <!--<span slot="describe">-->
         <!--查看或编辑个人主页-->
         <!--</span>-->
@@ -133,6 +133,7 @@
     },
     data () {
       return {
+        user: null,
         events: false,
         calls: false,
         messages: false,
@@ -153,7 +154,19 @@
         }
       }
     },
+    mounted() {
+		  this.getData();
+    },
     methods: {
+		  getData(){
+        this.axios.post('http://127.0.0.1:8080/zhiliao/profile/0',{
+          page: 1
+        }).then( (response) => {
+          if( response.data.code === '0000'){
+            this.user = response.data.data.user;
+          }
+        })
+      },
       handleToggle (key) {
         this[key] = !this[key]
       },
@@ -194,6 +207,9 @@
       jumpToCollection() {
         this.$router.push("/collection");
       },
+      jumpToProfile(){
+		    this.$router.push("/profile/"+this.user.userId);
+      }
     },
 	}
 </script>
